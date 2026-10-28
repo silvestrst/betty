@@ -1,0 +1,38 @@
+# Golden vectors: the "encoding" set, checked by tests/golden/mod.rs. Don't edit by hand.
+# Each name is followed by its bytes in hex, 16 bytes per indented line.
+u8
+  ab
+u16_little_endian
+  3412
+u32_fixed_width
+  01000000
+u64_max
+  ffffffffffffffff
+i64_minus_one
+  ffffffffffffffff
+bool_false
+  00
+bool_true
+  01
+string_ascii
+  050000004265747479
+string_utf8
+  050000004cc4ab6761
+option_none
+  00
+option_some
+  010700
+vec_u16
+  0200000001000200
+array_u8_4
+  deadbeef
+btreemap_ascending
+  02000000010a00021400
+struct_fields_in_order
+  010300000003000000706f74
+enum_unit_variant
+  00
+enum_tuple_variant
+  02f401000000000000
+enum_struct_variant
+  0704000000416e6e61

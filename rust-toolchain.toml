@@ -1,0 +1,6 @@
+# Pinned so fmt, clippy and tests behave the same locally and in CI.
+# Bump it deliberately, in its own change.
+[toolchain]
+channel = "1.98.1"
+components = ["clippy", "rustfmt"]
+profile = "minimal"
