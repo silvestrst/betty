@@ -1,0 +1,3 @@
+# Checked in CI with `cargo fmt --check`. Stable options only, so the pinned toolchain's rustfmt
+# applies them.
+style_edition = "2024"

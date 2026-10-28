@@ -597,7 +597,8 @@ sequenceDiagram
 
 - Structs only; no floats, no `usize` and no `HashMap` (ordered `BTreeMap` or sorted `Vec` only).
 - Integers are fixed-width little-endian, a `bool` must be 0 or 1, strings are length-prefixed UTF-8 checked on decode, and fixed arrays such as `[u8; 64]` signatures are written as they are.
-- Each enum writes its variant number as one byte. Variants use explicit numbers (`#[borsh(use_discriminant = true)]`) where the derive supports it and declaration order otherwise; either way they are only appended and a number is never reused.
+- Each enum writes its variant number as one byte. Every ledger enum gives its variants explicit numbers, with `#[repr(u8)]` and `#[borsh(use_discriminant = true)]`; the derive supports this for unit, tuple and struct variants alike, checked in M0. Numbers are only appended and never reused, and gaps are allowed: decoding a number with no variant fails.
+- A map or set is a `u32` count, then its entries in strictly ascending key order. Decoding enforces this through borsh's `de_strict_order` feature, which every build must enable. Without it borsh sorts out-of-order keys and keeps only the last of repeated ones without an error, so two different byte strings, with two different ids, would decode to the same value.
 - A one-byte object-type tag goes in front of every object.
 - Ledger types derive Borsh for the log, and serde only for presets and the data passed to the UI. Internal types such as `Accepted`, `StakeCtx` and `ActivityState` are never encoded.
 
@@ -607,7 +608,7 @@ Golden test vectors (bytes, hash, signature) are checked into the repo and run o
 
 - **Possible escrow.** Solana programs read Borsh natively and verify Ed25519 cheaply, so a Solana escrow could check Betty's own signed settlement statement as it is. EVM chains would use the separate EIP-712 form described under Possible future extensions either way.
 - **Parts not written in Rust.** A bot admin, a mailbox server, an account service or league tools might not all be Rust. Borsh has a written spec and implementations in TypeScript, Go, Python, Java and other languages; postcard is mostly Rust only.
-- **One encoding per value by design.** With postcard, Betty's own rules and tests would carry that guarantee alone. With Borsh the format's spec carries it and the tests confirm it.
+- **One encoding per value by design.** With postcard, Betty's own rules and tests would carry that guarantee alone. With Borsh the format's spec carries it, decoding enforces it with the `de_strict_order` check above, and the tests confirm it.
 - **Stable enum numbers.** Through serde, postcard always numbers variants in declaration order. Borsh can use explicit numbers, which makes append-only less fragile.
 - **Costs.** Records are roughly 10 to 20% larger because integers are fixed-width, so QR sync needs slightly more frames; most of each record is 32-byte keys and 64-byte signatures anyway. Ledger types also carry a second set of derives.
 - **Also considered.** Protobuf is not canonical and silently drops unknown fields, so an old phone could ignore a field that changes meaning; it stays a good fit for any future server API. Deterministic CBOR (DAG-CBOR) is standardized but larger, with more rules to get right. bincode changed its byte format between major versions. FlatBuffers and Cap'n Proto are built for zero-copy speed, not for unique bytes.

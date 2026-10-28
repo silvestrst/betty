@@ -1,0 +1,15 @@
+[package]
+name = "betty-ledger"
+description = "Betty's signed party ledger: records, encoding, signatures, validation, replay"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+borsh.workspace = true
+
+[lints]
+workspace = true

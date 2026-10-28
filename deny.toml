@@ -1,0 +1,40 @@
+# cargo-deny policy, checked in CI by `cargo deny check`.
+# See the design's "What AGPL-3.0 means for Betty".
+
+[graph]
+# Check optional dependencies too, so enabling a feature can't bring in an unchecked licence.
+all-features = true
+
+[advisories]
+# Fail on any RustSec advisory that affects the dependency graph.
+ignore = []
+
+[licenses]
+# Betty is AGPL-3.0-only, so every dependency must be licensed compatibly. A GPL-2.0-only crate
+# is not. Add a licence here only after checking its compatibility.
+allow = [
+    "AGPL-3.0-only", # Betty's own crates
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC0-1.0",
+    "ISC",
+    "MIT",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Zlib",
+]
+confidence-threshold = 0.93
+# The list is the policy, not an inventory of what is in use today.
+unused-allowed-license = "allow"
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+# Path dependencies between Betty's own unpublished crates carry no version.
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
