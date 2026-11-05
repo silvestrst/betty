@@ -1,5 +1,5 @@
 [package]
-name = "betty-ledger"
+name = "ledger"
 description = "Betty's signed party ledger: records, encoding, signatures, validation, replay"
 version.workspace = true
 edition.workspace = true

@@ -2,9 +2,9 @@
 //! test.
 //!
 //! A set is one text file in `tests/vectors/`, embedded at compile time, so the same tests can
-//! later run on Android, iOS and wasm32 where the repository isn't on disk. Each vector is a name
-//! on its own line followed by its bytes in hex, 16 bytes per indented line, so a diff of the file
-//! shows exactly which bytes moved.
+//! later run on Android and iOS where the repository isn't on disk. Each vector is a name on its
+//! own line followed by its bytes in hex, 16 bytes per indented line, so a diff of the file shows
+//! exactly which bytes moved.
 //!
 //! A failing vector means the change is wrong, unless it is an agreed format change. Two opt-in
 //! modes write the file:
@@ -55,8 +55,12 @@ impl GoldenSet {
         }
     }
 
-    /// Records `bytes` as the vector `name`. `finish` compares everything recorded.
-    pub fn check(&mut self, name: &str, bytes: &[u8]) {
+    /// Saves `bytes` as the vector `name` for `finish` to compare with the stored set. Nothing is
+    /// compared here, so a wrong byte only fails at `finish`.
+    ///
+    /// Panics if `name` is empty, uses anything but letters, digits and `_-./` (the characters
+    /// the vector file can hold as a name), or was already recorded in this run.
+    pub fn record(&mut self, name: &str, bytes: &[u8]) {
         assert!(
             !name.is_empty()
                 && name
