@@ -36,7 +36,7 @@ where
     T: BorshSerialize + BorshDeserialize + PartialEq + Debug,
 {
     let bytes = borsh::to_vec(value).expect("encoding into a Vec cannot fail");
-    set.check(name, &bytes);
+    set.record(name, &bytes);
     let decoded: T =
         borsh::from_slice(&bytes).unwrap_or_else(|e| panic!("{name} does not decode: {e}"));
     assert_eq!(
