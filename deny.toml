@@ -1,5 +1,5 @@
 # cargo-deny policy, checked in CI by `cargo deny check`.
-# See the design's "What AGPL-3.0 means for Betty".
+# See the design's "PolyForm Perimeter licence" decision in docs/design/architecture.md.
 
 [graph]
 # Check optional dependencies too, so enabling a feature can't bring in an unchecked licence.
@@ -10,10 +10,10 @@ all-features = true
 ignore = []
 
 [licenses]
-# Betty is AGPL-3.0-only, so every dependency must be licensed compatibly. A GPL-2.0-only crate
-# is not. Add a licence here only after checking its compatibility.
+# Betty is under PolyForm Perimeter, so every dependency must allow use in a product that isn't
+# open source. GPL, LGPL and AGPL crates are not allowed. MPL-2.0 is copyleft per file only, so it
+# is. Add a licence here only after checking its compatibility.
 allow = [
-    "AGPL-3.0-only", # Betty's own crates
     "Apache-2.0",
     "BSD-2-Clause",
     "BSD-3-Clause",
@@ -27,6 +27,10 @@ allow = [
 confidence-threshold = 0.93
 # The list is the policy, not an inventory of what is in use today.
 unused-allowed-license = "allow"
+
+[licenses.private]
+# Betty's own crates are unpublished and carry Perimeter, which has no SPDX id, so skip them.
+ignore = true
 
 [bans]
 multiple-versions = "warn"

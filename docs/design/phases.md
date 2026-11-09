@@ -44,7 +44,7 @@ Crates: `ledger`, `settle`, `store`, `engine` without sync, `cli`. Nothing opens
 
 | # | Milestone | Delivers | Done when |
 | --- | --- | --- | --- |
-| M0 | Foundations | Workspace, AGPL-3.0 licence, `cargo deny` licence check, CI (fmt, clippy, tests), cross-compile jobs for Android and iOS, golden-vector harness | CI is green on all three targets with an empty ledger |
+| M0 | Foundations | Workspace, licence (PolyForm Perimeter), `cargo deny` licence check, CI (fmt, clippy, tests), cross-compile jobs for Android and iOS, golden-vector harness | CI is green on all three targets with an empty ledger |
 | M1 | Ledger kernel | Types, Borsh encoding rules, BLAKE3 ids, Ed25519 signing with domain separation, `Signed<T>`, heads, the ordering layer emitting accepted records, golden vectors | Vectors match byte-for-byte on all targets; decode fuzzing runs clean for 1 hour |
 | M2 | Party state machine (state layer) | Genesis, admission, managed members, stakes, the four payout models with their rules and templates, the schema and limit checks presets must pass, results, void, corrections, replay into balances, rounding | Property tests: balances always sum to zero, replay is deterministic, corrections fully reverse |
 | M3 | Governance | Attestations, checkpoints, quorum, Leave, Depart, proxy counts with witness, handover, takeover, Assume, Reissue, equivocation evidence | Scenario tests pass for every sequence in the diagrams except the Everyone agrees chip count (M9), including a two-person party |

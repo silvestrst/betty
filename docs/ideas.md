@@ -103,7 +103,7 @@ Not planned, and not part of the current design. Betty syncs while the app is in
 - **Costs and limits:**
   - **The "no server" promise:** the README and the design overview both promise no server, so both would need rewording. The notifications must stay optional, so Betty works fully if the service is down or a notification is lost.
   - **Metadata:** the service, Apple and Google could see when a party is active and which devices are in it, though not its bets or balances.
-  - **Running it:** someone has to keep the service up and pay for it, and limit abuse without accounts. The AGPL network clause also applies to anyone running a modified copy for other people.
+  - **Running it:** someone has to keep the service up and pay for it, and limit abuse without accounts.
   - **Notification overload:** one notification per bet would be annoying, so senders would have to limit how often they ask.
 
 ## Smaller notes
