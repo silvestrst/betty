@@ -90,4 +90,8 @@ The core is written in Rust and does all the bookkeeping, identically on every p
 
 ## Licence
 
-Betty is free software under the GNU Affero General Public License, version 3 only. See [LICENSE](LICENSE).
+Betty is source-available under the [PolyForm Perimeter License 1.0.1](LICENSE). You may use, change and share it for any purpose except providing a product that competes with Betty, including a free one. It is not open source.
+
+The name "Betty" isn't covered by the licence: see [TRADEMARKS.md](TRADEMARKS.md). A fork must use a different name.
+
+Contributions will need a contributor licence agreement. Until one is published, outside pull requests can't be merged.

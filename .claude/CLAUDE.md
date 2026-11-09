@@ -72,4 +72,4 @@ When you finish a task, print a list of the documents you used for it, covering 
 
 ## Checks
 
-Run `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test` and `cargo deny check`. Licence is AGPL-3.0-only, so ask before adding a dependency.
+Run `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test` and `cargo deny check`. Licence is PolyForm Perimeter 1.0.1, so dependencies must be permissive (no GPL family); ask before adding one.

@@ -91,14 +91,10 @@ Accepted 2 November 2026.
 
 **Consequences.** The split stays possible, because the crate boundaries would follow the same layers and bytes don't depend on which crate a type lives in. It is worth revisiting if something other than `ledger` needs `rules`, or if the test proves too weak.
 
-### AGPL-3.0-only licence
+### PolyForm Perimeter licence
 
-Accepted 26 October 2026.
+Accepted 26 October 2026 as AGPL-3.0-only. Changed to PolyForm Perimeter 1.0.1 on 9 November 2026.
 
-Betty is licensed under AGPL-3.0 (`AGPL-3.0-only`). The repository is `silvestrst/betty` on a personal GitHub account; an organisation account was the alternative.
+Betty is source-available under the [PolyForm Perimeter License 1.0.1](https://polyformproject.org/licenses/perimeter/1.0.1), to stay on the conservative side for now. Rights can always be widened later, up to open source, but can't be taken back once granted.
 
-What AGPL-3.0 means for Betty:
-
-- **Dependencies.** Every dependency must be AGPL-compatible. MIT, Apache 2.0, BSD and MPL 2.0 all are, which covers Tauri, iroh, Borsh, BLAKE3, ed25519-dalek and UniFFI. A GPL-2.0-only crate is not. From M0, CI runs `cargo deny` with a licence allowlist.
-- **App Store.** The Free Software Foundation's view is that Apple's App Store terms add restrictions the GPL family forbids, which is why some GPL apps were removed in the past. That binds people who redistribute someone else's code, not the copyright holder, so you can publish your own builds. To keep that true once other people contribute, contributions need a contributor licence agreement (or a licence grant to you) that allows App Store distribution. Google Play has no such conflict.
-- **Network use.** If a relay or small server is ever built, anyone who runs a modified copy for other people must offer those people its source.
+**Dependencies.** They must use permissive licences (MIT, Apache 2.0, BSD, ISC, Zlib, CC0, Unicode-3.0, MPL 2.0); no GPL, LGPL or AGPL. CI enforces this with `cargo deny`.

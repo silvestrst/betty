@@ -1,6 +1,6 @@
 # Open decisions
 
-These are not settled yet. The design proceeds on the recommended option for each, and each can be settled during the phase where it appears. When one is settled, move it into the design, as [README.md](README.md) describes, and remove its row. The licence, signature scheme and party size cap were settled on 26 October 2026: see "Decisions" in [architecture.md](architecture.md) and [identity-and-party.md](identity-and-party.md).
+These are not settled yet. The design proceeds on the recommended option for each, and each can be settled during the phase where it appears. When one is settled, move it into the design, as [README.md](README.md) describes, and remove its row. The licence, signature scheme and party size cap were settled on 26 October 2026, and the licence was changed on 9 November 2026: see "Decisions" in [architecture.md](architecture.md) and [identity-and-party.md](identity-and-party.md).
 
 | # | Decision | Recommended | Alternative | Needed by |
 | --- | --- | --- | --- | --- |
