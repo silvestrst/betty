@@ -2,6 +2,8 @@
 //! that turn them into balances.
 //!
 //! The crate is pure: no I/O, no async, no clock and no randomness. That keeps it building for
-//! every target the app runs on and makes replay give the same bytes and balances everywhere. The
-//! design's "Ledger format" section is the contract it implements, and golden vectors in `tests/`
+//! every target the app runs on and makes replay give the same bytes and balances everywhere.
+//! `docs/design/ledger-format.md` is the contract it implements, and golden vectors in `tests/`
 //! pin the encoding.
+
+pub mod primitives;

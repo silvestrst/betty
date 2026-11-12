@@ -16,6 +16,15 @@ publish = false
 # map and set keys that are out of order or repeated. Without it, borsh sorts them silently, so
 # two different byte strings would decode to the same value.
 borsh = { version = "1.8", features = ["derive", "de_strict_order"] }
+# Ids and hashes (docs/design/ledger-format.md, Hashing).
+blake3 = "1.8"
+# Signatures, checked in strict mode (docs/design/ledger-format.md, Signing). Only precomputed
+# tables and zeroized secret keys: no `rand_core`, because the ledger takes seeds from callers and
+# has no randomness.
+ed25519-dalek = { version = "3.0", default-features = false, features = ["fast", "zeroize"] }
+# Error types in library crates (docs/design/architecture.md, Decisions). Generates only
+# `Display`, `Error` and `From` impls, so it can't change bytes or replay.
+thiserror = "2.0"
 # Hex in tests only: golden vector files and test keys. A dev-dependency, so it never reaches a
 # built app and can't change bytes or replay.
 hex = "0.4"

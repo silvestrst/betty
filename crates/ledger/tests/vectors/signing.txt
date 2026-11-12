@@ -1,0 +1,60 @@
+# Golden vectors: the "signing" set, checked by tests/golden/mod.rs. Don't edit by hand.
+# Each name is followed by its bytes in hex, 16 bytes per indented line.
+tag/entry
+  00
+domain/entry
+  62657474792f76312f656e747279
+domain_hash/entry
+  40d3f11c57e14bdf032e9608584b6acb
+  3fffc7ed22c70bebf59a9c07d384686c
+tag/member_action
+  01
+domain/member_action
+  62657474792f76312f6d656d6265725f
+  616374696f6e
+domain_hash/member_action
+  f835697c9132dcc20f4effef7f569e35
+  813350d152a2969c61021b6f86f744e8
+tag/attest
+  02
+domain/attest
+  62657474792f76312f617474657374
+domain_hash/attest
+  088cac85cfb47f3f7eb06489814f08f1
+  dbf22b6d17120c010122e9a2b2efc82f
+tag/mark
+  03
+domain/mark
+  62657474792f76312f6d61726b
+domain_hash/mark
+  74d47cf1257fe292662a47063a89d383
+  2f4a6fa4c3814a1fa13db4ae00032b1f
+public_key
+  00d75a980182b10ab7d54bfed3c96407
+  3a0ee172f3daa62325af021a68f70751
+  1a
+note/signing_bytes
+  74d47cf1257fe292662a47063a89d383
+  2f4a6fa4c3814a1fa13db4ae00032b1f
+  0e000000416e6e612070616964204d61
+  726bac0d00000000000000d75a980182
+  b10ab7d54bfed3c964073a0ee172f3da
+  a62325af021a68f707511a
+note/signature
+  00a952b8995574685601ec368399ea6c
+  fd7445655d4f1ca594e3ae80e0ead4ca
+  81efe0aeced943cae22ec86e3b020657
+  8b52923b9e62e0aec080ac86df07da7d
+  04
+note/signed
+  0e000000416e6e612070616964204d61
+  726bac0d00000000000000d75a980182
+  b10ab7d54bfed3c964073a0ee172f3da
+  a62325af021a68f707511a00a952b899
+  5574685601ec368399ea6cfd7445655d
+  4f1ca594e3ae80e0ead4ca81efe0aece
+  d943cae22ec86e3b0206578b52923b9e
+  62e0aec080ac86df07da7d04
+note/id
+  7ff968cc003d42c7979a34e6cd61498a
+  33bb550d25cc1e1599c419265aa8d180

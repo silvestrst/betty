@@ -70,6 +70,10 @@ Accepted 26 October 2026.
 
 Ed25519, with the seed protected by the iOS Keychain or Android Keystore.
 
+**Why Ed25519.** Signing is deterministic (RFC 8032), so the ledger needs no randomness and the same input always gives the same bytes, which golden vectors rely on. Strict verification makes signatures non-malleable, so an object can't be given a second id ([ledger-format.md](ledger-format.md), "Hashing"). ECDSA on P-256 needs extra rules for that, and hardware ECDSA signs with random nonces. Keys and signatures are small and fixed-size (32 and 64 bytes), and `ed25519-dalek` is pure Rust with a permissive licence, so every target computes the same bytes. The transport key uses the same curve.
+
+**Consequences.** Neither the Secure Enclave nor StrongBox can hold an Ed25519 key, so on most phones the seed is protected at rest and is in app memory while it signs. This is the usual model for apps built on Curve25519, such as Signal and software wallets. Android 13 and later can keep an Ed25519 key in the TEE; it would still be a `PublicKey::Ed25519` and fit the `KeyStore` trait unchanged.
+
 **Alternative considered.** P-256 with Secure Enclave and StrongBox (hardware-backed, more platform code). Can be added later as a new key variant.
 
 ### At most 16 members per party

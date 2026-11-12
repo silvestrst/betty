@@ -98,3 +98,17 @@ Accepted 26 October 2026 as AGPL-3.0-only. Changed to PolyForm Perimeter 1.0.1 o
 Betty is source-available under the [PolyForm Perimeter License 1.0.1](https://polyformproject.org/licenses/perimeter/1.0.1), to stay on the conservative side for now. Rights can always be widened later, up to open source, but can't be taken back once granted.
 
 **Dependencies.** They must use permissive licences (MIT, Apache 2.0, BSD, ISC, Zlib, CC0, Unicode-3.0, MPL 2.0); no GPL, LGPL or AGPL. CI enforces this with `cargo deny`.
+
+### `blake3` and `ed25519-dalek` for hashing and signing
+
+Accepted 9 November 2026.
+
+`ledger` hashes with the `blake3` crate and signs with `ed25519-dalek` 3, whose strict verification [ledger-format.md](ledger-format.md) relies on. `ed25519-dalek` is built with only its `fast` and `zeroize` features, so neither crate brings a random number generator: the ledger has no randomness and takes seeds from its callers. Every crate the two pull in has a licence on the allowlist.
+
+**Alternative considered.** `ed25519-dalek` 2.2, the previous major line, more widely used so far. Ed25519 signatures are deterministic, so both give the same bytes, and switching would change no golden vector.
+
+### Typed errors with `thiserror`; `anyhow` only at the binary edge
+
+Accepted 10 November 2026.
+
+Library crates return their own error enums, derived with `thiserror`, so callers can match on why something failed. `anyhow::Error` and `Box<dyn Error>` never appear in a library crate's API; `anyhow` is allowed only in binaries such as `cli` and in test helpers. `thiserror` generates only `Display`, `Error` and `From` impls, so it can't change bytes or replay.
