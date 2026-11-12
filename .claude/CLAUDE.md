@@ -70,6 +70,28 @@ When you finish a task, print a list of the documents you used for it, covering 
 - The state layer never reads `epoch`, `seq` or `prev`.
 - A failing golden vector means the change is wrong. Never regenerate vectors without asking.
 
+## Dependencies
+
+- Where a well-known crate is the obvious choice, use it rather than writing your own, such as `hex` for hex encoding. Write it yourself only when the crate would weaken security or doesn't fit well.
+- Licence is PolyForm Perimeter 1.0.1, so dependencies must be permissive (no GPL family). Ask before adding one.
+
+## Tests
+
+Every test has a short rustdoc comment: a one-line summary of what it checks, then a paragraph saying why it is needed and how it checks it.
+
+```rust
+/// A bool byte other than 0 or 1 fails to decode.
+///
+/// If 2 also decoded as true, one value would have two encodings, and so two ids. Decodes `[2]`
+/// and expects borsh's bool error.
+#[test]
+fn rejects_bool_other_than_0_or_1() {
+```
+
+## Code rules
+
+- No `unwrap` or `expect` outside tests. Return an error, or restructure so the failure can't happen.
+
 ## Checks
 
-Run `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test` and `cargo deny check`. Licence is PolyForm Perimeter 1.0.1, so dependencies must be permissive (no GPL family); ask before adding one.
+Run `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings`, `cargo test` and `cargo deny check`.
