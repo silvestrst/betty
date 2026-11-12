@@ -72,7 +72,7 @@ impl GoldenSet {
             self.recorded.iter().all(|(n, _)| n != name),
             "golden vector {name} is recorded twice"
         );
-        self.recorded.push((name.to_owned(), to_hex(bytes)));
+        self.recorded.push((name.to_owned(), hex::encode(bytes)));
     }
 
     /// Compares every recorded vector with the stored set, or writes the file when
@@ -266,13 +266,4 @@ fn spaced(hex: &str) -> String {
         .map(|pair| std::str::from_utf8(pair).expect("hex is ASCII"))
         .collect();
     pairs.join(" ")
-}
-
-fn to_hex(bytes: &[u8]) -> String {
-    bytes
-        .iter()
-        .fold(String::with_capacity(bytes.len() * 2), |mut hex, byte| {
-            let _ = write!(hex, "{byte:02x}");
-            hex
-        })
 }
