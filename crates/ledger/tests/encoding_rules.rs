@@ -45,6 +45,11 @@ where
     );
 }
 
+/// Pins the bytes of each value shape the ledger uses to the design's encoding rules.
+///
+/// Ids and signatures cover these bytes, so a borsh upgrade that moved one would split phones.
+/// Encodes a sample of each shape, decodes it back, and compares the bytes with
+/// `vectors/encoding.txt`.
 #[test]
 fn golden_encoding_rules() {
     let mut set = golden_set!("encoding");
@@ -110,46 +115,75 @@ fn assert_rejected<T: BorshDeserialize + Debug>(bytes: &[u8], fragment: &str) {
     }
 }
 
+/// A bool byte other than 0 or 1 fails to decode.
+///
+/// If 2 also decoded as true, one value would have two encodings, and so two ids. Decodes `[2]`
+/// and expects borsh's bool error.
 #[test]
 fn rejects_bool_other_than_0_or_1() {
     assert_rejected::<bool>(&[2], "bool");
 }
 
+/// An Option tag other than 0 or 1 fails to decode.
+///
+/// A second tag meaning Some would give one value two encodings, and so two ids. Decodes tag 2
+/// and a byte as `Option<u8>`, and expects borsh's Option error.
 #[test]
 fn rejects_option_tag_other_than_0_or_1() {
     assert_rejected::<Option<u8>>(&[2, 0], "Option");
 }
 
+/// Input with bytes left over after the value fails to decode.
+///
+/// If extra bytes were ignored, every value would have endless encodings, each with its own id.
+/// Decodes a u16 followed by one extra byte and expects borsh's leftover-bytes error.
 #[test]
 fn rejects_trailing_bytes() {
     assert_rejected::<u16>(&[0x34, 0x12, 0], "Not all bytes read");
 }
 
+/// Input shorter than its type fails to decode.
+///
+/// Bytes cut short in transit must be refused cleanly, never padded or panicked on. Decodes three
+/// bytes as a u32 and expects borsh's length error.
 #[test]
 fn rejects_truncated_input() {
     assert_rejected::<u32>(&[1, 0, 0], "Unexpected length");
 }
 
+/// A string whose bytes aren't valid UTF-8 fails to decode.
+///
+/// The design checks strings on decode, so no invalid text reaches the log. Decodes a one-byte
+/// string holding 0xff and expects borsh's UTF-8 error.
 #[test]
 fn rejects_invalid_utf8() {
     assert_rejected::<String>(&[1, 0, 0, 0, 0xff], "utf-8");
 }
 
+/// A variant number in a gap of the explicit numbering fails to decode.
+///
+/// A phone must refuse a number it doesn't know, such as one from a newer Betty, rather than
+/// guess. Decodes `[1]`, a gap in `SampleEnum`, and expects borsh's variant error.
 #[test]
 fn rejects_unknown_enum_variant() {
-    // Variant number 1 is a gap in SampleEnum.
     assert_rejected::<SampleEnum>(&[1], "variant");
 }
 
+/// A map whose keys aren't in ascending order fails to decode.
+///
+/// Without borsh's `de_strict_order` feature they are sorted silently, so two encodings, with two
+/// ids, would give one map. Decodes two entries, key 2 before key 1, and expects the
+/// ascending-order error.
 #[test]
 fn rejects_map_keys_out_of_order() {
-    // Two entries, key 2 before key 1. Needs borsh's de_strict_order feature: without it, borsh
-    // sorts them silently.
     assert_rejected::<BTreeMap<u8, u16>>(&[2, 0, 0, 0, 2, 20, 0, 1, 10, 0], "ascending order");
 }
 
+/// A map with the same key twice fails to decode.
+///
+/// Without `de_strict_order`, borsh keeps the last repeat silently, so two encodings would give
+/// one map. Decodes two entries with key 1 and expects the ascending-order error.
 #[test]
 fn rejects_repeated_map_keys() {
-    // Two entries with key 1. Without de_strict_order, borsh keeps the last one silently.
     assert_rejected::<BTreeMap<u8, u16>>(&[2, 0, 0, 0, 1, 10, 0, 1, 20, 0], "ascending order");
 }
